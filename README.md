@@ -1,10 +1,10 @@
 # gfd.sh
 
-Serverless personal site and dev log powered by AWS Lambda + API Gateway + S3, with Cognito Hosted UI authentication for posting.
+Serverless personal site and message thread powered by AWS Lambda + API Gateway + S3, with Cognito Hosted UI authentication for posting.
 
 ## Overview
 
-This project serves static/dynamic pages from a single Lambda handler and stores rendered posts in S3.
+This project serves static/dynamic pages from a single Lambda handler and stores rendered posts with author attribution in S3.
 
 - Public pages: home (`/`), about (`/about`)
 - Auth routes: login (`/login`), callback/debug (`/test`), logout (`/logout`)
@@ -15,6 +15,7 @@ This project serves static/dynamic pages from a single Lambda handler and stores
 
 - Unauthenticated users see `login` in nav.
 - Authenticated users see `new post` + `logout`.
+- Posts display as a message thread with Cognito username + timestamp.
 - Markdown input is rendered to HTML before being saved to S3.
 - Missing required environment variables cause startup failure (no defaults).
 
@@ -77,20 +78,21 @@ In your Cognito user pool app client:
 
 ## Data Model
 
-Posts are stored in S3 key `posts.json`:
+Posts are stored in S3 key `posts.json` as a message thread:
 
 ```json
 {
   "posts": [
     {
       "timestamp": "2026-03-04 12:00:00 MST",
+      "author": "username",
       "html": "<div class=\"textPost\">...</div>"
     }
   ]
 }
 ```
 
-Newest posts are inserted at index 0.
+Newest posts are inserted at index 0. The `author` field contains the Cognito username (from `cognito:username` claim or email prefix fallback).
 
 ---
 

@@ -17,9 +17,9 @@ _CODE_PH = '\x00CB{}\x00'
 
 # ── public API ──────────────────────────────────────────────────────
 
-def render_markdown(text):
+def render_markdown(text, username='unknown'):
     """
-    Convert Markdown text to HTML, wrapped in a post div with timestamp.
+    Convert Markdown text to HTML, wrapped in a post div with username and timestamp.
     This is the main entry point for creating new posts.
     """
     body_html = _convert(text)
@@ -28,9 +28,9 @@ def render_markdown(text):
     ).strftime("%Y-%m-%d %H:%M:%S %Z")
     return (
         '<div class="textPost" style="position: relative; padding-bottom: 1.2em;">'
+        + f'<div class="post-author"><span class="username">{_html.escape(username)}</span> · '
+        + f'<span class="post-time">{timestamp}</span></div>'
         + body_html
-        + '<p class="timestamp" style="position: absolute; bottom: 0; right: 0; '
-          f'margin: 0; font-size:0.75rem; color:#484f58;">Posted on {timestamp}</p>'
         + '</div>'
     )
 

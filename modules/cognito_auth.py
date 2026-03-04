@@ -99,10 +99,13 @@ def _decode_jwt_payload(token):
 
 def make_cookie_header(user_info):
     """Create a Set-Cookie header value containing signed session data."""
+    # Try to get username from cognito:username claim, fallback to email prefix
+    username = user_info.get('cognito:username') or user_info.get('email', 'unknown').split('@')[0]
     payload = {
-        'email': user_info.get('email', ''),
-        'sub':   user_info.get('sub', ''),
-        'exp':   int(time.time()) + 86400,   # 24 h
+        'email':    user_info.get('email', ''),
+        'username': username,
+        'sub':      user_info.get('sub', ''),
+        'exp':      int(time.time()) + 86400,   # 24 h
     }
     data_b64 = base64.urlsafe_b64encode(json.dumps(payload).encode()).decode()
     sig = hmac.new(SESSION_SECRET.encode(), data_b64.encode(), hashlib.sha256).hexdigest()

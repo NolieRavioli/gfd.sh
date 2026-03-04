@@ -116,8 +116,9 @@ def _handle_post(event, path, user):
             content = data.get('content', '')
             if not content.strip():
                 return _text(400, 'Post content cannot be empty')
-            formatted_html = render_markdown(content)
-            save_post(formatted_html)
+            username = user.get('username', user.get('email', 'unknown'))
+            formatted_html = render_markdown(content, username=username)
+            save_post(formatted_html, username=username)
             return _text(200, 'Post added successfully!')
         except json.JSONDecodeError:
             return _text(400, 'Invalid JSON body')

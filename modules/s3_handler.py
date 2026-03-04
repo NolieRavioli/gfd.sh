@@ -39,7 +39,7 @@ def get_posts():
         return []
 
 
-def save_post(formatted_html):
+def save_post(formatted_html, username):
     """Prepend a new post (pre-rendered HTML) to posts.json in S3."""
     try:
         posts_data = json.loads(read_s3('posts.json'))
@@ -52,6 +52,7 @@ def save_post(formatted_html):
 
     posts_data['posts'].insert(0, {
         'timestamp': timestamp,
+        'author': username,
         'html': formatted_html,
     })
 
