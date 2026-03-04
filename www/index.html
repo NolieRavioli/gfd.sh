@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="gfd.sh">
+  <meta name="description" content="gfd.sh — Personal dev domain, project hub. Powered by AWS Lambda.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gfd.sh</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="/" class="nav-brand">gfd<span>.sh</span></a>
+    <div class="nav-links">
+      <a href="/" class="active">home</a>
+      <a href="/about">about</a>
+      <!-- AUTH_NAV -->
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer">hondocabin <span class="external-badge">↗</span></a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-terminal">
+      <span class="prompt">$</span> <span id="typed-text"></span><span class="typing-cursor"></span>
+    </div>
+    <p class="hero-subtitle">dev site —  experiments, projects, etc.</p>
+    <div class="hero-links">
+      <a href="https://github.com/NolieRavioli/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        🏔️ hondocabin.com
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-value" id="stat-repos">—</span>
+      <span class="stat-label">Public Repos</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-latest">—</span>
+      <span class="stat-label">Latest Push</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-uptime">—</span>
+      <span class="stat-label">Domain Age</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-stack">λ + S3</span>
+      <span class="stat-label">Infra</span>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
+  <section class="section">
+    <div class="section-header">
+      <span class="hash">#</span>
+      <h2>projects</h2>
+    </div>
+    <div class="projects-grid" id="projects-grid">
+      <div class="projects-loading">Fetching repos from GitHub...</div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Quick Links -->
+  <section class="section">
+    <div class="section-header">
+      <span class="hash">#</span>
+      <h2>links</h2>
+    </div>
+    <div class="quick-links">
+      <a href="https://github.com/NolieRavioli/" target="_blank" rel="noopener noreferrer" class="link-card">
+        <div class="link-icon">👨‍💻</div>
+        <div class="link-info">
+          <h3>GitHub — NolieRavioli</h3>
+          <p>Open source projects, experiments, and contributions</p>
+        </div>
+      </a>
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer" class="link-card">
+        <div class="link-icon">🏔️</div>
+        <div class="link-info">
+          <h3>hondocabin.com</h3>
+          <p>IoT temperature monitoring &amp; self-hosted infra for the cabin</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Dev Log -->
+  <section class="section">
+    <div class="section-header">
+      <span class="hash">#</span>
+      <h2>dev log</h2>
+    </div>
+    <div class="devlog-container">
+      <!-- POSTS_PLACEHOLDER -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-domains">
+      <a href="https://gfd.sh">gfd.sh</a>
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer">hondocabin.com</a>
+      <a href="https://nolp.net" target="_blank" rel="noopener noreferrer">nolp.net</a>
+      <a href="https://ffqq.gg" target="_blank" rel="noopener noreferrer">ffqq.gg</a>
+    </div>
+    <div class="footer-badge">Powered by <span>AWS Lambda</span> + <span>S3</span> · zero servers, near-zero cost</div>
+  </footer>
+
+  <script>
+    // ==========================================
+    // Typing Animation
+    // ==========================================
+    const phrases = ['gfd.sh', 'curl -fsSL gfd.sh | bash', 'wget -qO- gfd.sh | bash', 'chmod +x gfd.sh', './gfd.sh'];
+    let phraseIdx = 0, charIdx = 0, deleting = false;
+    const typedEl = document.getElementById('typed-text');
+
+    function typeLoop() {
+      const current = phrases[phraseIdx];
+      if (!deleting) {
+        typedEl.textContent = current.substring(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          setTimeout(() => { deleting = true; typeLoop(); }, 2200);
+          return;
+        }
+        setTimeout(typeLoop, 80 + Math.random() * 40);
+      } else {
+        typedEl.textContent = current.substring(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          deleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          setTimeout(typeLoop, 500);
+          return;
+        }
+        setTimeout(typeLoop, 40);
+      }
+    }
+    typeLoop();
+
+    // ==========================================
+    // GitHub API — Stats & Projects
+    // ==========================================
+    const GITHUB_USER = 'NolieRavioli';
+    const GITHUB_API = `https://api.github.com/users/${GITHUB_USER}`;
+
+    // Language colors (subset)
+    const langColors = {
+      JavaScript: '#f1e05a', Python: '#3572A5', TypeScript: '#3178c6', HTML: '#e34c26',
+      CSS: '#563d7c', Shell: '#89e051', C: '#555555', 'C++': '#f34b7d', 'C#': '#178600',
+      Java: '#b07219', Go: '#00ADD8', Rust: '#dea584', PHP: '#4F5D95', Ruby: '#701516',
+      Lua: '#000080', Dart: '#00B4AB', Kotlin: '#A97BFF', Swift: '#F05138'
+    };
+
+    function timeAgo(dateStr) {
+      const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+      if (seconds < 60) return 'just now';
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes}m ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours}h ago`;
+      const days = Math.floor(hours / 24);
+      if (days < 30) return `${days}d ago`;
+      const months = Math.floor(days / 30);
+      return `${months}mo ago`;
+    }
+
+    // Fetch user profile for repo count
+    fetch(GITHUB_API)
+      .then(r => r.json())
+      .then(user => {
+        document.getElementById('stat-repos').textContent = user.public_repos || '—';
+      })
+      .catch(() => {});
+
+    // Fetch repos for project cards + stats
+    fetch(`${GITHUB_API}/repos?sort=pushed&per_page=6`)
+      .then(r => r.json())
+      .then(repos => {
+        if (!Array.isArray(repos) || repos.length === 0) throw new Error('No repos');
+
+        // Latest push stat
+        const latest = repos[0];
+        document.getElementById('stat-latest').textContent = timeAgo(latest.pushed_at);
+
+        // Render project cards
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = repos.map(repo => `
+          <div class="project-card">
+            <h3><a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a></h3>
+            <div class="description">${repo.description || 'No description'}</div>
+            <div class="project-meta">
+              ${repo.language ? `<span><span class="lang-dot" style="background:${langColors[repo.language] || '#8b949e'}"></span>${repo.language}</span>` : ''}
+              ${repo.stargazers_count > 0 ? `<span class="stars">★ ${repo.stargazers_count}</span>` : ''}
+              <span>${timeAgo(repo.pushed_at)}</span>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(() => {
+        document.getElementById('projects-grid').innerHTML =
+          '<div class="projects-loading">Could not load repos — <a href="https://github.com/NolieRavioli/" target="_blank">view on GitHub</a></div>';
+      });
+
+    // ==========================================
+    // Domain Age Counter
+    // ==========================================
+    // gfd.sh registration date
+    const domainStart = new Date('2025-02-28');
+    function updateUptime() {
+      const diff = Date.now() - domainStart.getTime();
+      const days = Math.floor(diff / 86400000);
+      document.getElementById('stat-uptime').textContent = `${days}d`;
+    }
+    updateUptime();
+    setInterval(updateUptime, 86400000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="gfd.sh">
+  <meta name="description" content="About gfd.sh — a personal dev domain for hosting serverless projects, APIs, and experiments on AWS.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — gfd.sh</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="/" class="nav-brand">gfd<span>.sh</span></a>
+    <div class="nav-links">
+      <a href="/">home</a>
+      <a href="/about" class="active">about</a>
+      <!-- AUTH_NAV -->
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer">hondocabin <span class="external-badge">↗</span></a>
+    </div>
+  </nav>
+
+  <!-- About Hero -->
+  <div class="about-hero">
+    <h1>What is gfd.sh?</h1>
+    <p>A personal dev domain for shipping real projects, testing infrastructure, and learning in production.</p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Content -->
+  <div class="about-section">
+
+    <h2>Why this domain exists</h2>
+    <p>
+      <strong style="color: var(--accent-green);">gfd.sh</strong> is my catch-all endpoint for development work.
+      I use it to prototype APIs, host serverless applications, and test out AWS services
+      without cluttering up production domains. It's the domain I point at when I need something live
+      in five minutes — a webhook receiver, a data endpoint, a quick demo.
+    </p>
+    <p>
+      The site you're looking at right now is the proof of concept: a fully serverless website
+      running on AWS Lambda with zero traditional servers, near-zero monthly cost, and a deployment
+      pipeline that fits in a single Python file.
+    </p>
+
+    <h2>The Stack</h2>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="stack-icon">⚡</div>
+        <h3>AWS Lambda</h3>
+        <p>Python runtime handles all routing, serving, and post processing</p>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🌐</div>
+        <h3>API Gateway</h3>
+        <p>REST API fronting Lambda with custom domain mapping</p>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🗄️</div>
+        <h3>S3</h3>
+        <p>Blog posts stored as JSON — the entire data layer in one file</p>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🔀</div>
+        <h3>Route 53</h3>
+        <p>DNS management for gfd.sh and associated subdomains</p>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🔒</div>
+        <h3>ACM</h3>
+        <p>TLS certificates for HTTPS on all endpoints</p>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📦</div>
+        <h3>Zero Servers</h3>
+        <p>No EC2, no containers — purely event-driven compute</p>
+      </div>
+    </div>
+    <p>
+      The entire application — HTML templates, CSS, and the Lambda handler — ships as a single
+      deployment package. Posts are stored in S3 as Markdown rendered to HTML at write time.
+      Authentication is handled through AWS Cognito (OAuth2/OIDC). The whole thing costs
+      pennies per month.
+    </p>
+
+    <h2>Other Projects</h2>
+    <p>
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-green);">hondocabin.com</a>
+      — IoT temperature monitoring for a cabin in the mountains. Raspberry Pi collects
+      sensor data over 433MHz radios, packs it into binary frames, and serves it through
+      both a self-hosted endpoint and an AWS-backed fallback. The system handles sub-zero temps,
+      power outages, and spotty internet with grace.
+    </p>
+    <p>
+      I've also been working with <strong>AWS Cognito</strong> and <strong>IoT Core</strong> for
+      authenticated device communication, writing embedded C for microcontrollers, and building
+      automation tools for things like MP3 metadata management and network monitoring.
+    </p>
+    <p>
+      Check out more on <a href="https://github.com/NolieRavioli/" target="_blank" rel="noopener noreferrer">GitHub</a>.
+    </p>
+
+    <h2>Domains I Own</h2>
+    <p>
+      <strong style="color: var(--text-primary);">gfd.sh</strong> — this site. Dev endpoint and project hub.<br>
+      <strong style="color: var(--text-primary);">hondocabin.com</strong> — cabin IoT monitoring and self-hosted services.<br>
+      <strong style="color: var(--text-primary);">nolp.net</strong> — self-hosted intranet with a few public-facing endpoints.<br>
+      <strong style="color: var(--text-primary);">ffqq.gg</strong> — reserved. Still figuring out what to do with this one.
+    </p>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-domains">
+      <a href="https://gfd.sh">gfd.sh</a>
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer">hondocabin.com</a>
+      <a href="https://nolp.net" target="_blank" rel="noopener noreferrer">nolp.net</a>
+      <a href="https://ffqq.gg" target="_blank" rel="noopener noreferrer">ffqq.gg</a>
+    </div>
+    <div class="footer-badge">Powered by <span>AWS Lambda</span> + <span>S3</span> · zero servers, near-zero cost</div>
+  </footer>
+
+</body>
+</html>

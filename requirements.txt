@@ -1,0 +1,4 @@
+# gfd.sh Lambda dependencies
+# boto3 is pre-installed in the AWS Lambda Python runtime.
+# All other modules use only the Python standard library.
+boto3

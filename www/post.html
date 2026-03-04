@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="gfd.sh">
+  <meta name="description" content="gfd.sh — New Post">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Post — gfd.sh</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="post-page">
+
+  <!-- Navigation -->
+  <nav>
+    <a href="/" class="nav-brand">gfd<span>.sh</span></a>
+    <div class="nav-links">
+      <a href="/">home</a>
+      <a href="/about">about</a>
+      <!-- AUTH_NAV -->
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer">hondocabin <span class="external-badge">↗</span></a>
+    </div>
+  </nav>
+
+  <!-- Post Form -->
+  <div class="page-content">
+    <div class="post-header">
+      <h1>> new entry</h1>
+      <p>Authenticated via Cognito — write in Markdown</p>
+    </div>
+    <div id="post-form">
+      <textarea id="post-content" rows="14" placeholder="# Heading&#10;**bold** *italic* ~~strikethrough~~&#10;`inline code`&#10;&#10;```&#10;code block&#10;```&#10;&#10;[link text](https://example.com)&#10;- list item&#10;- another item&#10;&#10;> blockquote"></textarea>
+      <div class="form-actions">
+        <button id="submit-btn">submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-domains">
+      <a href="https://gfd.sh">gfd.sh</a>
+      <a href="https://hondocabin.com" target="_blank" rel="noopener noreferrer">hondocabin.com</a>
+      <a href="https://nolp.net" target="_blank" rel="noopener noreferrer">nolp.net</a>
+      <a href="https://ffqq.gg" target="_blank" rel="noopener noreferrer">ffqq.gg</a>
+    </div>
+    <div class="footer-badge">Powered by <span>AWS Lambda</span> + <span>S3</span> + <span>Cognito</span></div>
+  </footer>
+
+  <script>
+    (function() {
+      const form = document.getElementById('post-form');
+      const originalHTML = form.innerHTML;
+
+      function submitPost() {
+        const textarea = document.getElementById('post-content');
+        const btn = document.getElementById('submit-btn');
+        const content = textarea.value.trim();
+        if (!content) return;
+
+        btn.disabled = true;
+        btn.textContent = 'posting...';
+
+        fetch('/post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ content })
+        })
+        .then(r => {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(() => {
+          form.innerHTML =
+            '<div style="padding:3rem;text-align:center;">' +
+            '<h3 style="color:var(--accent-green);font-family:var(--font-mono);margin:0 0 1rem;">Post added!</h3>' +
+            '<p style="margin-bottom:1.5rem;"><a href="/" style="color:var(--accent-blue);">View Homepage</a></p>' +
+            '<button id="reset-btn" style="padding:.5rem 1.2rem;background:transparent;border:1px solid var(--border-color);' +
+            'color:var(--text-secondary);font-family:var(--font-mono);font-size:.85rem;border-radius:var(--radius);cursor:pointer;">New Post</button>' +
+            '</div>';
+          document.getElementById('reset-btn').addEventListener('click', function() {
+            form.innerHTML = originalHTML;
+            attachListeners();
+          });
+        })
+        .catch(err => {
+          btn.disabled = false;
+          btn.textContent = 'submit';
+          alert('Error: ' + err.message);
+        });
+      }
+
+      function attachListeners() {
+        document.getElementById('submit-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          submitPost();
+        });
+        document.getElementById('post-content').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            submitPost();
+          }
+          if (e.key === 'Tab') {
+            e.preventDefault();
+            const ta = e.target;
+            const start = ta.selectionStart;
+            ta.value = ta.value.substring(0, start) + '    ' + ta.value.substring(ta.selectionEnd);
+            ta.selectionStart = ta.selectionEnd = start + 4;
+          }
+        });
+      }
+
+      attachListeners();
+    })();
+  </script>
+
+</body>
+</html>
